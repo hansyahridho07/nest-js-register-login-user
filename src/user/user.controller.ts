@@ -24,7 +24,7 @@ import {
 import { Roles } from './guard/roles.decorator';
 import { UserGuard } from './guard/user.guard';
 import { Role } from '@prisma/client';
-import { Auth } from './guard/auth.decorator';
+// import { Auth } from './guard/auth.decorator';
 
 @Controller('user')
 export class UserController {
@@ -35,9 +35,9 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  // @UseGuards(UserGuard)
-  // @Roles([Role.SUPERADMIN, Role.ADMIN])
-  @Auth("SUPERADMIN","ADMIN")
+  @UseGuards(UserGuard)
+  @Roles([Role.SUPERADMIN, Role.ADMIN])
+  // @Auth("SUPERADMIN","ADMIN")
   @Get()
   findAll(@Query() payload: findAllData) {
     return this.userService.findAll(payload);
